@@ -13,9 +13,10 @@ export const Inicio = () => {
                                 lg:gap-10 lg:flex-row'
             >
                 <div
-                    className='w-[150px] h-[150px] bg-[url("./cesar.png")] bg-center bg-cover rounded-[50%] border-4 border-celeste-oscuro shadow-2xl
+                    className='w-[150px] h-[150px] bg-center bg-cover rounded-[50%] border-4 border-celeste-oscuro shadow-2xl
                                     lg:w-[250px] lg:h-[250px] 
                                     xl:w-[350px] xl:h-[350px]'
+                    style={{ backgroundImage: `url("./cesar.png")` }}
                 />
 
                 <div
