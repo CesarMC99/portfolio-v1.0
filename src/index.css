@@ -1,0 +1,43 @@
+@import 'tailwindcss';
+
+@theme {
+    --color-carbon: #121212;
+    --color-gris-claro: #e0e0e0;
+    --color-gris-medio: #b0b0b0;
+    --color-azul: #001966;
+    --color-azul-marino: #001628;
+    --color-acero: #638fbb;
+    --color-acero-oscuro: #435f79;
+    --color-celeste: #d6ebff;
+    --color-celeste-oscuro: #99b3ff;
+    --color-amarillo: #ffe62d;
+
+    --animate-scroll-left: scroll-left 30s linear infinite;
+}
+
+@keyframes wave {
+    0% {
+        transform: rotate(0deg);
+    }
+    20% {
+        transform: rotate(20deg);
+    }
+    40% {
+        transform: rotate(-10deg);
+    }
+    60% {
+        transform: rotate(10deg);
+    }
+    80% {
+        transform: rotate(-5deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes scroll-left {
+    to {
+        left: -200px;
+    }
+}
