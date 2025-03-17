@@ -110,22 +110,34 @@ export const ProyectCard = ({ proyect }: ProyectCardProps) => {
     const [activeIndex, setActiveIndex] = useState<Proyect['id'] | null>(null)
     const [isOverflowing, setIsOverflowing] = useState(false)
 
+    const [contentHeight, setContentHeight] = useState<number | null>(null)
+
     const paragraphRef = useRef<HTMLParagraphElement>(null)
+
+    // useEffect(() => {
+    //     if (paragraphRef.current) {
+    //         setIsOverflowing(
+    //             paragraphRef.current.scrollHeight >
+    //                 paragraphRef.current.clientHeight
+    //         )
+    //     }
+    // }, [])
 
     useEffect(() => {
         if (paragraphRef.current) {
-            setIsOverflowing(
-                paragraphRef.current.scrollHeight >
-                    paragraphRef.current.clientHeight
-            )
+            const { scrollHeight, clientHeight } = paragraphRef.current
+            setIsOverflowing(scrollHeight > clientHeight)
+            setContentHeight(scrollHeight) // Guardamos la altura real del contenido
         }
-    }, [])
+    }, [proyect.description]) // Se actualiza si la descripción cambia
 
     const handleClick = (id: Proyect['id']) => {
         if (isOverflowing) {
             setActiveIndex(activeIndex === id ? null : id)
         }
     }
+
+    const isCollapsed = activeIndex !== proyect.id
 
     return (
         <article className='transition-transform duration-700 shadow-lg rounded-xl overflow-hidden shadow-azul-marino'>
@@ -165,13 +177,13 @@ export const ProyectCard = ({ proyect }: ProyectCardProps) => {
                                 md:items-center '
                 >
                     {/* Descripción con expansión */}
-                    <p
+                    {/* <p
                         ref={paragraphRef}
                         className={`text-celeste text-lg overflow-hidden transition-all duration-300 
                             ${
                                 activeIndex === proyect.id
                                     ? 'h-[14rem] md:h-[7rem]'
-                                    : 'h-[5.5rem] line-clamp-3'
+                                    : 'h-full line-clamp-3'
                             } 
                             ${
                                 isOverflowing
@@ -182,6 +194,26 @@ export const ProyectCard = ({ proyect }: ProyectCardProps) => {
                         onClick={() => handleClick(proyect.id)}
                     >
                         {proyect.description}
+                    </p> */}
+
+                    <p
+                        ref={paragraphRef}
+                        className={`text-celeste text-lg overflow-hidden transition-all duration-300 ease-in-out
+                            ${
+                                isOverflowing
+                                    ? 'cursor-pointer hover:opacity-80'
+                                    : ''
+                            } 
+                            xl:text-xl ${isCollapsed ? 'line-clamp-3' : ''}`}
+                        style={{
+                            height: isCollapsed
+                                ? '5.5rem'
+                                : `${contentHeight}px`,
+                        }}
+                        onClick={() => handleClick(proyect.id)}
+                    >
+                        {proyect.description}
+                        {isCollapsed && isOverflowing && '...'}
                     </p>
 
                     <div className='flex flex-col items-center justify-center gap-4'>
